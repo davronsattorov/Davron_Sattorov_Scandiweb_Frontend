@@ -1,0 +1,50 @@
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  top: 0;
+  height: 80px;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+  padding-bottom: 5px;
+}
+
+.list li {
+  margin-right: 30px;
+  font-family: "Raleway";
+  color: #1d1f22;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.list_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  width: 35px;
+  height: 2px;
+  background: #5ece7b;
+  /* padding: 0 10px; */
+}
+
+.logo {
+  cursor: pointer;
+}
