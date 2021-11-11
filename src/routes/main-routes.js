@@ -10,8 +10,14 @@ export default [
     children: [],
   },
   {
+    component: Category,
+    path: "/categories/:type",
+    title: "Categories",
+    children: [],
+  },
+  {
     component: Product,
-    path: "/product",
+    path: "/categories/:type/:productId",
     title: "Product",
     children: [],
   },
