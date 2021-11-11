@@ -1,13 +1,32 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import Cart from "../components/Cart";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
+import { closeCart } from "../redux/actions/cartActions";
 
-export default class RouterLayout extends Component {
+class RouterLayout extends Component {
   render() {
     return (
-      <div>
-        <Layout navbar={<Navbar />}>{this.props.children} </Layout>
-      </div>
+      <>
+        <Layout>{this.props.children}</Layout>
+        {this.props.isModalOpen && <Cart />}
+      </>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { isModalOpen } = state.cart;
+  return {
+    isModalOpen,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeModal: () => dispatch(closeCart()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouterLayout);
