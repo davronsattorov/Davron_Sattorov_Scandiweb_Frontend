@@ -48,3 +48,20 @@
 .logo {
   cursor: pointer;
 }
+
+.cart_logo {
+  position: relative;
+  cursor: pointer;
+}
+
+.items_number {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -50%;
+  right: -50%;
+  text-align: center;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+}

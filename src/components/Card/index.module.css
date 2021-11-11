@@ -2,6 +2,8 @@
   position: relative;
   padding: 15px;
   transition: all 0.3s ease-in;
+  width: 355px;
+  height: 444px;
 }
 
 .container:hover {
@@ -62,4 +64,44 @@
 
   cursor: pointer;
   transition: background-color 0.3s ease-in;
+}
+
+.product_image {
+  position: relative;
+}
+
+.product_image img {
+  transition: all 0.24s linear;
+  cursor: pointer;
+}
+
+.product_image:hover img {
+  filter: brightness(65%);
+}
+
+.arrows {
+  position: absolute;
+  color: white;
+  font-size: 30px;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+
+  cursor: pointer;
+  z-index: 20;
+}
+
+.left_arrow {
+  top: 50%;
+  left: 2%;
+  transform: translateY(-50%);
+}
+
+.right_arrow {
+  top: 50%;
+  right: 2%;
+  transform: translateY(-50%);
 }

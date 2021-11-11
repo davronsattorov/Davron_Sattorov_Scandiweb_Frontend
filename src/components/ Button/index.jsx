@@ -3,10 +3,16 @@ import "./index.css";
 
 export default class Button extends Component {
   render() {
-    const { size, style, className, children, ...rest } = this.props;
+    const {
+      size = "lg",
+      style = "primary",
+      className,
+      children,
+      ...rest
+    } = this.props;
 
     return (
-      <button className="btn" {...rest}>
+      <button className={`btn btn-${size} ${style}`} {...rest}>
         {children}
       </button>
     );

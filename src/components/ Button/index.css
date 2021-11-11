@@ -1,8 +1,8 @@
 .btn {
-  background: #5ece7b;
-  color: #fff;
-  border: none;
-  padding: 20px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 
   cursor: pointer;
   transition: all 0.3s linear;
@@ -10,4 +10,24 @@
 
 .btn:hover {
   opacity: 0.9;
+}
+
+.btn-lg {
+  padding: 20px 16px;
+}
+
+.btn-md {
+  padding: 16px 8px;
+}
+
+.primary {
+  background: #5ece7b;
+  color: #fff;
+  border: none;
+}
+
+.outlined {
+  background: transparent;
+  color: #333;
+  border: 1px solid #333;
 }

@@ -1,6 +1,7 @@
 .container {
   display: flex;
-  padding-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 20px;
 }
 
 .container div {
@@ -13,4 +14,9 @@
   margin-right: 15px;
 
   cursor: pointer;
+}
+
+.selected_item {
+  background: #1d1f22;
+  color: #fff;
 }

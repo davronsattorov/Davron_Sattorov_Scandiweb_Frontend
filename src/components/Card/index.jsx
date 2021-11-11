@@ -1,34 +1,59 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { cartIcon } from "../../assets/icons";
 import stl from "./index.module.css";
+import { connect } from "react-redux";
+import { addItem, removeItem } from "../../redux/actions/cartActions";
 
-export default class Card extends Component {
+class Card extends Component {
   render() {
     const { item } = this.props;
+    const { type } = this.props.match.params;
+    const history = createBrowserHistory();
+
+    const handleClick = (e) => {
+      if (item.inStock) {
+        history.push(`/home/categories/${type}/${item.id}`);
+        refreshPage();
+      } else {
+        e.preventDefault();
+      }
+    };
+
+    const refreshPage = () => window.location.reload(false);
 
     return (
       <div className={stl.container}>
-        {!item.isAvaliable && (
+        {!item?.inStock && (
           <div className={stl.disabled_text}>Out of stock</div>
         )}
-        <Link
-          className={`${stl.list_item} ${
-            !item.isAvaliable && stl.disabled_item
-          }`}
-          to={item.isAvaliable && "/home/product"}
+        <div
+          className={`${stl.list_item} ${!item?.inStock && stl.disabled_item}`}
+          onClick={handleClick}
         >
-          <img
-            src="https://www.w3schools.com/css/paris.jpg"
-            alt="Img"
-            width="354"
-            height="330"
-          />
-          <p className={stl.title}>{item.title}</p>
-          <span className={stl.price}>${item.price}</span>
-        </Link>
-        {item.isAvaliable && <p className={stl.cart_icon}>{cartIcon}</p>}
+          <img src={item?.gallery[0]} alt="Img" width="354" height="330" />
+          <p className={stl.title}>{item?.name}</p>
+          <span className={stl.price}>
+            {item?.prices[0]?.currency} {item?.prices[0]?.amount}
+          </span>
+        </div>
+        {item?.inStock && (
+          <p className={stl.cart_icon} onClick={() => this.props.addItem(item)}>
+            {cartIcon}
+          </p>
+        )}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: (item) => dispatch(addItem(item)),
+    removeItem: (item) => dispatch(removeItem(item)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

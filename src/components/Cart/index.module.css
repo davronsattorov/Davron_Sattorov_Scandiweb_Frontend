@@ -1,0 +1,90 @@
+.cart_dropdown {
+  position: fixed;
+  left: 1028px;
+  top: 78px;
+  width: 325px;
+  max-height: 540px;
+  padding: 15px 20px;
+  background: #fff;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.05), 0 10px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow: hidden;
+  z-index: 99;
+}
+
+.inner_container {
+  max-height: 540px;
+  overflow-y: scroll;
+}
+
+.items {
+  width: 100%;
+}
+
+.items hr {
+  border: 1px solid #e5e5e5;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.item p:first-child {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1rem;
+  max-width: 136px;
+  line-height: 25.6px;
+  max-height: 52px;
+}
+
+.item p {
+  font-weight: bold;
+
+  line-height: 18px;
+}
+
+.price {
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 1rem;
+  width: 52px;
+  height: 26px;
+  padding: 5px 0;
+}
+
+.buttons {
+  display: flex;
+  padding: 10px 0;
+}
+
+.buttons Button:first-child {
+  margin-right: 10px;
+}
+
+.controllers_container {
+  display: flex;
+}
+
+.controllers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px 5px;
+}
+
+.controllers span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 24px;
+  height: 24px;
+
+  border: 1px solid #333;
+
+  cursor: pointer;
+}
