@@ -1,12 +1,12 @@
 .cart_dropdown {
   position: fixed;
-  left: 1028px;
+  left: 70%;
   top: 78px;
   width: 325px;
   max-height: 540px;
-  padding: 15px 20px;
+  padding: 15px 30px;
   background: #fff;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.05), 0 10px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.05), 0 10px 20px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
   z-index: 99;
 }
@@ -26,6 +26,7 @@
 
 .item {
   display: flex;
+  /* border: 1px solid #333; */
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -50,8 +51,8 @@
   font-family: "Raleway";
   font-weight: 500;
   font-size: 1rem;
-  width: 52px;
   height: 26px;
+
   padding: 5px 0;
 }
 

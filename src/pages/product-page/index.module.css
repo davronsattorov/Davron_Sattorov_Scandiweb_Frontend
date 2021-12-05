@@ -15,15 +15,22 @@
 }
 
 .image_list img {
-  padding-bottom: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.image_list img:hover {
+  transform: scale(0.95);
 }
 
 .product_info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  min-height: 511px;
   padding-left: 50px;
-  padding-right: 200px;
 }
 
 .title {
@@ -31,6 +38,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 30px;
+  padding-bottom: 20px;
 }
 
 .price p:first-child {

@@ -79,7 +79,12 @@
   filter: brightness(65%);
 }
 
+.product_image:hover .arrows {
+  visibility: visible;
+}
+
 .arrows {
+  visibility: hidden;
   position: absolute;
   color: white;
   font-size: 30px;

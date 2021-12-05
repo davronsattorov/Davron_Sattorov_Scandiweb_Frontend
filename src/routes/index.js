@@ -16,6 +16,8 @@ export default class AppRouter extends Component {
   render() {
     return (
       <Switch>
+        <Redirect exact from="/" to="/home/categories/clothes" />
+        {/* {window.location.reload(false)} */}
         {layouts.map((layout, index) => (
           <layout.component key={index}>
             {layout.routes.map((route) => (
@@ -36,7 +38,6 @@ export default class AppRouter extends Component {
             ))}
           </layout.component>
         ))}
-        <Redirect to="/home/categories" />
       </Switch>
     );
   }

@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 140px;
+  padding-top: 150px;
+  font-family: "Raleway";
+}
+
+.container h1 {
+  font-size: 32px;
+  line-height: 40px;
+  padding-bottom: 30px;
+}
+
+.items {
+  width: 100%;
+}
+
+.items hr {
+  border: 1px solid #e5e5e5;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 5px;
+  padding: 0 10px;
+  cursor: pointer;
+  transition: all 0.25s ease-in;
+}
+
+.item p:first-child {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  max-width: 230px;
+  line-height: 35px;
+  max-height: 50px;
+}
+
+.item p {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 18px;
+}
+
+.price {
+  padding: 5px 0;
+}
+
+.controllers_container {
+  display: flex;
+}
+
+.controllers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px 5px;
+}
+
+.controllers span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  width: 35px;
+  height: 35px;
+
+  border: 1px solid #333;
+
+  cursor: pointer;
+}

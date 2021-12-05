@@ -4,10 +4,11 @@ import { cartIcon } from "../../assets/icons";
 import stl from "./index.module.css";
 import { connect } from "react-redux";
 import { addItem, removeItem } from "../../redux/actions/cartActions";
+import showPrice from "../../functions/showPrice";
 
 class Card extends Component {
   render() {
-    const { item } = this.props;
+    const { item, selectedCurrency, addItem } = this.props;
     const { type } = this.props.match.params;
     const history = createBrowserHistory();
 
@@ -34,11 +35,27 @@ class Card extends Component {
           <img src={item?.gallery[0]} alt="Img" width="354" height="330" />
           <p className={stl.title}>{item?.name}</p>
           <span className={stl.price}>
-            {item?.prices[0]?.currency} {item?.prices[0]?.amount}
+            {showPrice(item?.prices, selectedCurrency)}
           </span>
         </div>
         {item?.inStock && (
-          <p className={stl.cart_icon} onClick={() => this.props.addItem(item)}>
+          <p
+            className={stl.cart_icon}
+            onClick={() =>
+              addItem({
+                ...item,
+                selectedAttributes: {
+                  ...item.attributes.reduce(
+                    (acc, cur) => ({
+                      ...acc,
+                      [cur.name]: cur.items[0].value,
+                    }),
+                    {}
+                  ),
+                },
+              })
+            }
+          >
             {cartIcon}
           </p>
         )}
@@ -47,7 +64,11 @@ class Card extends Component {
   }
 }
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => {
+  const { selectedCurrency } = state.currency;
+
+  return { selectedCurrency };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -65,3 +65,16 @@
   color: #fff;
   border-radius: 50%;
 }
+
+.modals {
+  display: flex;
+}
+
+.modals div {
+  margin: 0 10px;
+}
+
+.currencySymbol {
+  color: #43464e;
+  font-size: 18px;
+}

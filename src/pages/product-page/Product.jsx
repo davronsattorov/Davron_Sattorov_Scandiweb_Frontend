@@ -2,57 +2,151 @@ import React, { Component } from "react";
 import stl from "./index.module.css";
 import ProductSizes from "../../components/ProductSizes";
 import Button from "../../components/ Button";
+import { GET_PRODUCT_BY_ID } from "../../graphql/queries";
+import { client } from "../../App";
+import { connect } from "react-redux";
+import {
+  addItem,
+  clearCart,
+  reduceItemQuantity,
+  removeItem,
+} from "../../redux/actions/cartActions";
+import showPrice from "../../functions/showPrice";
+import isObjectEmpty from "../../functions/isObjectEmpty";
 
-const images = [
-  {
-    url: "https://www.w3schools.com/css/paris.jpg",
-  },
-  {
-    url: "https://www.w3schools.com/css/paris.jpg",
-  },
-  {
-    url: "https://www.w3schools.com/css/paris.jpg",
-  },
-];
+class Product extends Component {
+  constructor(props) {
+    super(props);
 
-export default class Product extends Component {
+    this.state = {
+      isGettingData: true,
+      previewImg: "",
+      product: {},
+      selectedAttributes: {},
+    };
+
+    this.refreshPage = () => window.location.reload(false);
+
+    this.getProduct = (productId) => {
+      this.setState({ isGettingData: true });
+
+      client
+        .query({
+          query: GET_PRODUCT_BY_ID(productId),
+        })
+        .then((result) => {
+          this.setState({
+            product: result.data.product,
+            previewImg: result.data.product.gallery[0],
+          });
+          this.setState({ isGettingData: false });
+        });
+    };
+  }
+
+  componentDidMount() {
+    const { productId } = this.props.match.params;
+
+    this.getProduct(productId);
+  }
+
   render() {
+    const { selectedCurrency, addItem } = this.props;
+    const { isGettingData, product, previewImg, selectedAttributes } =
+      this.state;
+
+    const setMainImg = (img) => this.setState({ previewImg: img });
+
+    const handleSubmit = () => {
+      //if attributes are not selected,
+      //then first item of each attribute is selected automatically
+      if (isObjectEmpty(selectedAttributes)) {
+        addItem({
+          ...product,
+          selectedAttributes: {
+            ...product.attributes.reduce(
+              (acc, cur) => ({
+                ...acc,
+                [cur.name]: cur.items[0].value,
+              }),
+              {}
+            ),
+          },
+        });
+      } else addItem({ ...product, selectedAttributes });
+    };
+
     return (
-      <div className={stl.container}>
-        <div className={stl.images}>
+      !isGettingData && (
+        <div className={stl.container}>
           <div className={stl.image_list}>
-            {images.map(({ url }) => (
-              <img src={url} alt="" width="80" height="80" />
+            {product.gallery.map((url) => (
+              <img
+                src={url}
+                alt=""
+                width="80"
+                height="80"
+                onClick={() => setMainImg(url)}
+              />
             ))}
           </div>
-          <div className={stl.main_image}>
-            <img
-              src="https://www.w3schools.com/css/paris.jpg"
-              alt=""
-              width="610"
-              height="511"
-            />
-          </div>
-        </div>
-        <div className={stl.product_info}>
-          <div className={stl.title}>Apollo Running Short</div>
-          <div className={stl.size}>
-            Size:
-            <ProductSizes onChange={(val) => console.log("Size ===>", val)} />
-          </div>
 
-          <div className={stl.price}>
-            <p>Price:</p>
-            <p>$50.00</p>
-          </div>
-          <Button>ADD TO CART</Button>
-          <div className={stl.description}>
-            Find stunning women's cocktail dresses and party dresses. Stand out
-            in lace and metallic cocktail dresses and party dresses from all
-            your favorite brands.
+          <div className={stl.images}>
+            <div className={stl.main_image}>
+              <img src={previewImg} alt="preview" width="610" height="511" />
+            </div>
+            <div className={stl.product_info}>
+              <div className={stl.title}>{product.name}</div>
+              {product.attributes.map(({ name, items }) => (
+                <ProductSizes
+                  name={name}
+                  items={items}
+                  onChange={(val) =>
+                    this.setState({
+                      selectedAttributes: {
+                        ...selectedAttributes,
+                        [name]: val,
+                      },
+                    })
+                  }
+                />
+              ))}
+
+              <div className={stl.price}>
+                <p>Price:</p>
+                <p>{showPrice(product.prices, selectedCurrency)}</p>
+              </div>
+              <Button onClick={() => handleSubmit()}>ADD TO CART</Button>
+              <div
+                className={stl.description}
+                dangerouslySetInnerHTML={{
+                  __html: product.description,
+                }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { cartItems } = state.cart;
+  const { selectedCurrency } = state.currency;
+  return {
+    cartItems,
+    selectedCurrency,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: (item) => dispatch(addItem(item)),
+    removeItem: (item) => dispatch(removeItem(item)),
+    reduceItemQuantity: (item) => dispatch(reduceItemQuantity(item)),
+    clearCart: () => dispatch(clearCart()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

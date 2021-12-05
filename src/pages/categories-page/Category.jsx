@@ -1,57 +1,50 @@
 import React, { Component } from "react";
 import Card from "../../components/Card";
 import stl from "./index.module.css";
-
-const listItems = [
-  {
-    id: 1,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: true,
-  },
-  {
-    id: 2,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: true,
-  },
-  {
-    id: 3,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: false,
-  },
-  {
-    id: 4,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: true,
-  },
-  {
-    id: 5,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: true,
-  },
-  {
-    id: 6,
-    title: "Apollo Running Short",
-    price: "50.00",
-    isAvaliable: true,
-  },
-];
+import { client } from "../../App";
+import { GET_PRODUCTS_BY_CATEGORY } from "../../graphql/queries";
+import { capitalizeFirstLetter } from "../../functions/capitalizeFirstLetter";
 
 export class Category extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      category: [],
+      isGettingData: true,
+    };
+
+    this.getItems = (type) => {
+      this.setState({ isGettingData: true });
+      client
+        .query({
+          query: GET_PRODUCTS_BY_CATEGORY(type),
+        })
+        .then((result) => {
+          this.setState({ category: result.data.category });
+          this.setState({ isGettingData: false });
+        });
+    };
+  }
+
+  componentDidMount() {
+    let { type } = this.props.match.params;
+
+    this.getItems(type);
+  }
+
   render() {
-    return (
+    return !this.state.isGettingData ? (
       <div className={stl.container}>
-        <h1>Category name</h1>
+        <h1>{capitalizeFirstLetter(this.state.category?.name)}</h1>
         <div className={stl.list}>
-          {listItems.map((item, id) => (
-            <Card item={item} />
+          {this.state.category?.products?.map((item, id) => (
+            <Card item={item} match={this.props.match} key={id} />
           ))}
         </div>
       </div>
+    ) : (
+      ""
     );
   }
 }

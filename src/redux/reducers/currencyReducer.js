@@ -6,10 +6,8 @@ import {
   CHANGE_AMOUNT,
 } from "../constants";
 
-const euro = `&euro`;
-
 const INITIAL_STATE = {
-  isOpen: false,
+  isCurrencyOpen: false,
   currencies: [],
   selectedCurrency: "",
   selectedAmount: "",
@@ -20,12 +18,12 @@ const cartReducer = (state = INITIAL_STATE, { type, payload }) => {
     case TOGGLE_CURRENCY_MODAL:
       return {
         ...state,
-        isOpen: !state.isOpen,
+        isCurrencyOpen: !state.isCurrencyOpen,
       };
     case CLOSE_CURRENCY_MODAL:
       return {
         ...state,
-        isOpen: false,
+        isCurrencyOpen: false,
       };
     case SET_CURRENCIES:
       return {

@@ -11,9 +11,11 @@ import {
 import stl from "./index.module.css";
 import ImgPreview from "../Card/ImgPreview";
 import Button from "../ Button";
+import showPrice from "../../functions/showPrice";
 
 class Cart extends Component {
   render() {
+    const { selectedCurrency } = this.props;
     const history = createBrowserHistory();
 
     const refreshPage = () => window.location.reload(false);
@@ -36,8 +38,7 @@ class Cart extends Component {
                     <div className={stl.item_info}>
                       <p>{item.name}</p>
                       <p className={stl.price}>
-                        {item.prices[0].currency}
-                        {item.prices[0].amount}
+                        {showPrice(item?.prices, selectedCurrency)}
                       </p>
                     </div>
                     <div className={stl.controllers_container}>
@@ -94,9 +95,11 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   const { cartItems } = state.cart;
+  const { selectedCurrency } = state.currency;
 
   return {
     cartItems,
+    selectedCurrency,
   };
 };
 

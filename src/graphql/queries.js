@@ -26,6 +26,12 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
+export const GET_CURRENCIES = gql`
+  query {
+    currencies
+  }
+`;
+
 export const GET_PRODUCTS_BY_CATEGORY = (input) => gql`
 query {
   category(input: {title: "${input}"}) {
@@ -34,6 +40,13 @@ query {
       id
       name
       inStock
+      attributes{
+        name
+        items{
+          id
+          value
+        }
+      }
       prices {
         amount
         currency
@@ -66,10 +79,4 @@ query {
     description
   }
 }
-`;
-
-export const GET_CURRENCIES = () => gql`
-  query {
-    currencies
-  }
 `;

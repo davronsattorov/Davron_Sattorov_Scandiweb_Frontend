@@ -3,13 +3,20 @@ import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import stl from "./index.module.css";
 import { emptyCart, logo } from "../../assets/icons";
-import { toggleCart } from "../../redux/actions/cartActions";
+import { closeCart, toggleCart } from "../../redux/actions/cartActions";
 import { GET_CATEGORIES } from "../../graphql/queries";
 import { client } from "../../App";
+import {
+  closeCurrency,
+  toggleCurrency,
+} from "../../redux/actions/currencyActions";
+import getCurrencySymbol from "../../functions/getCurrencySymbol";
 
 const activeTabStyle = {
   fontWeight: "600",
   color: "#5ece7b",
+  padding: "20px 0",
+  borderBottom: "3px solid #5ece7b",
 };
 
 const history = createBrowserHistory();
@@ -22,6 +29,7 @@ class Navbar extends Component {
       type: "",
       activeTab: "",
       categories: [],
+      currencies: [],
     };
 
     this.handleTabClick = (input) => history.push(`/home/categories/${input}`);
@@ -54,7 +62,16 @@ class Navbar extends Component {
   }
 
   render() {
-    const { type } = this.props.match.params;
+    const {
+      cartItems,
+      handleCartModal,
+      closeCartModal,
+      isCurrencyOpen,
+      selectedCurrency,
+      currencies,
+      handleCurrencyModal,
+      closeCurrencyModal,
+    } = this.props;
 
     const refreshPage = () => window.location.reload(false);
 
@@ -73,9 +90,6 @@ class Navbar extends Component {
                 >
                   {name}
                 </li>
-                {this.state.type === name && (
-                  <div className={stl.underline}></div>
-                )}
               </div>
             ))}
           </ul>
@@ -83,15 +97,33 @@ class Navbar extends Component {
         <div className={stl.logo} onClick={refreshPage}>
           {logo}
         </div>
-        <div>
-          <div className={stl.cart_logo} onClick={this.props.handleCartModal}>
-            <span>{emptyCart}</span>
-            <span className={stl.items_number}>
-              {this.props.cartItems.reduce(
-                (acc, curr) => acc + curr.quantity,
-                0
-              )}
+        <div className={stl.modals}>
+          <div
+            className={stl.cart_logo}
+            onClick={() => {
+              handleCurrencyModal();
+              closeCartModal();
+            }}
+          >
+            <span className={stl.currencySymbol}>
+              {getCurrencySymbol(selectedCurrency) || "$"}
             </span>
+          </div>
+          <div
+            className={stl.cart_logo}
+            onClick={() => {
+              handleCartModal();
+              closeCurrencyModal();
+            }}
+          >
+            <span>{emptyCart}</span>
+            {cartItems.length ? (
+              <span className={stl.items_number}>
+                {cartItems.reduce((acc, curr) => acc + curr.quantity, 0)}
+              </span>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
@@ -101,15 +133,23 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   const { isModalOpen, cartItems } = state.cart;
+  const { isCurrencyOpen, selectedCurrency, currencies } = state.currency;
+
   return {
     isModalOpen,
     cartItems,
+    isCurrencyOpen,
+    selectedCurrency,
+    currencies,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleCartModal: () => dispatch(toggleCart()),
+    closeCartModal: () => dispatch(closeCart()),
+    handleCurrencyModal: () => dispatch(toggleCurrency()),
+    closeCurrencyModal: () => dispatch(closeCurrency()),
   };
 };
 

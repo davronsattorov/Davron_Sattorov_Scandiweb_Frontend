@@ -23,28 +23,34 @@ export default class ProductSizes extends Component {
   }
 
   render() {
+    const { size = "lg", name, items, onChange, showName = true } = this.props;
+
     return (
-      <div className={stl.size}>
-        {capitalizeFirstLetter(this.props.name)}:
-        <div className={stl.container}>
-          {this.props.items.map(({ id, value }) => (
+      <div>
+        {showName && capitalizeFirstLetter(name) + ":"}
+
+        <div
+          className={`${stl.container} ${
+            size === "lg" ? stl.size_lg : stl.size_sm
+          }`}
+        >
+          {items.map(({ id, value }) => (
             <div
-              // className={id === this.state.selectedSize && stl.selected_item}
               style={
                 id === this.state.selectedSize
-                  ? this.props.name === "Color"
+                  ? name === "Color"
                     ? { borderRadius: "50%", background: value }
                     : selectedStyle
-                  : this.props.name === "Color"
+                  : name === "Color"
                   ? { background: value, border: "0.7px solid #ccc" }
                   : {}
               }
               onClick={() => {
                 this.handleChange(id);
-                this.props.onChange(id);
+                onChange(id);
               }}
             >
-              {this.props.name !== "Color" ? value : ""}
+              {name !== "Color" ? value : ""}
             </div>
           ))}
         </div>
