@@ -13,6 +13,6 @@ export default class Layout extends Component {
 }
 
 Layout.propTypes = {
-  navbar: PropsType.Component,
+  navbar: PropsType.node,
   children: PropsType.node,
 };
