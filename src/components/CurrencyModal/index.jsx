@@ -1,4 +1,3 @@
-import { createBrowserHistory } from "history";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
@@ -27,11 +26,8 @@ class CurrencyModal extends Component {
   }
 
   render() {
-    const history = createBrowserHistory();
-
     const { currencies, selectedCurrency, changeCurrency, closeCurrencyModal } =
       this.props;
-    const refreshPage = () => window.location.reload(false);
 
     return (
       <div className={stl.cart_dropdown}>

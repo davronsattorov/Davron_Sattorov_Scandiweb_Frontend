@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Cart from "../components/Cart";
 import CurrencyModal from "../components/CurrencyModal";
 import Layout from "../components/Layout";
-import Navbar from "../components/Navbar";
 import { closeCart } from "../redux/actions/cartActions";
 import { closeCurrency } from "../redux/actions/currencyActions";
 

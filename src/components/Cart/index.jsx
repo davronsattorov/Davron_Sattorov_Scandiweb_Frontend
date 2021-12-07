@@ -68,7 +68,7 @@ class Cart extends Component {
           <div className={stl.buttons}>
             <Button
               size="md"
-              style="outlined"
+              shape="outlined"
               onClick={() => {
                 history.push("/home/cart");
                 this.props.closeCartModal();

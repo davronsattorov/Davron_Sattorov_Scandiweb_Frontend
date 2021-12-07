@@ -66,9 +66,7 @@ class Navbar extends Component {
       cartItems,
       handleCartModal,
       closeCartModal,
-      isCurrencyOpen,
       selectedCurrency,
-      currencies,
       handleCurrencyModal,
       closeCurrencyModal,
     } = this.props;
