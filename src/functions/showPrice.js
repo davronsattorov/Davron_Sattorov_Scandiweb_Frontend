@@ -1,11 +1,11 @@
 import getCurrencySymbol from "./getCurrencySymbol";
 
-const showPrice = (prices, selectedCurrency) => {
-  let newCurrency = prices?.filter(
+const showPrice = (prices = [], selectedCurrency) => {
+  const newCurrency = prices?.filter(
     ({ currency }) => currency === selectedCurrency
   )[0];
 
-  let { currency, amount } = newCurrency;
+  const { currency, amount } = newCurrency;
 
   return (
     <>
