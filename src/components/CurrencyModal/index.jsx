@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { connect } from "react-redux";
 import {
   changeCurrency,
@@ -70,3 +71,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencyModal);
+
+CurrencyModal.propTypes = {
+  currencies: PropsType.array,
+  selectedCurrency: PropsType.string,
+  setCurrencies: PropsType.func,
+  changeCurrency: PropsType.func,
+  closeCurrencyModal: PropsType.func,
+};

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
+import { connect } from "react-redux";
 import stl from "./index.module.css";
 import ProductSizes from "../../components/ProductSizes";
 import Button from "../../components/ Button";
 import { GET_PRODUCT_BY_ID } from "../../graphql/queries";
 import { client } from "../../App";
-import { connect } from "react-redux";
 import {
   addItem,
   clearCart,
@@ -80,8 +81,9 @@ class Product extends Component {
       !isGettingData && (
         <div className={stl.container}>
           <div className={stl.image_list}>
-            {product.gallery.map((url) => (
+            {product.gallery.map((url, index) => (
               <img
+                key={index}
                 src={url}
                 alt=""
                 width="80"
@@ -97,8 +99,9 @@ class Product extends Component {
             </div>
             <div className={stl.product_info}>
               <div className={stl.title}>{product.name}</div>
-              {product.attributes.map(({ name, items }) => (
+              {product.attributes.map(({ name, items }, index) => (
                 <ProductSizes
+                  key={index}
                   name={name}
                   items={items}
                   onChange={(val) =>
@@ -150,3 +153,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
+
+Product.propTypes = {
+  match: PropsType.object,
+  selectedCurrency: PropsType.string,
+  addItem: PropsType.func,
+};

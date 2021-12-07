@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import stl from "./index.module.css";
@@ -52,7 +53,7 @@ class Navbar extends Component {
     this.getItems();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { type } = this.props.match.params;
 
     if (prevProps.match.params.type !== type) {
@@ -152,3 +153,13 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+Navbar.propTypes = {
+  match: PropsType.object,
+  cartItems: PropsType.array,
+  handleCartModal: PropsType.func,
+  closeCartModal: PropsType.func,
+  selectedCurrency: PropsType.string,
+  handleCurrencyModal: PropsType.func,
+  closeCurrencyModal: PropsType.func,
+};

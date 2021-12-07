@@ -1,6 +1,7 @@
-import { createBrowserHistory } from "history";
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { connect } from "react-redux";
+import { createBrowserHistory } from "history";
 import ImgPreview from "../../components/Card/ImgPreview";
 import ProductSizes from "../../components/ProductSizes";
 import showPrice from "../../functions/showPrice";
@@ -14,7 +15,13 @@ import stl from "./index.module.css";
 
 class Cart extends Component {
   render() {
-    const { selectedCurrency, cartItems } = this.props;
+    const {
+      selectedCurrency,
+      cartItems,
+      addItem,
+      reduceItemQuantity,
+      removeItem,
+    } = this.props;
     const history = createBrowserHistory();
 
     return (
@@ -23,7 +30,7 @@ class Cart extends Component {
 
         <div className={stl.items}>
           {cartItems.length
-            ? cartItems.map((item, index) => (
+            ? cartItems.map((item) => (
                 <>
                   <hr />
                   <div
@@ -41,8 +48,9 @@ class Cart extends Component {
                         {showPrice(item.prices, selectedCurrency)}
                       </p>
                       <p className={stl.size}>
-                        {item.attributes?.map(({ name, items }) => (
+                        {item.attributes?.map(({ name, items }, index) => (
                           <ProductSizes
+                            key={index}
                             size="sm"
                             showName={false}
                             name={name}
@@ -57,13 +65,13 @@ class Cart extends Component {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className={stl.controllers}>
-                        <span onClick={() => this.props.addItem(item)}>+</span>
+                        <span onClick={() => addItem(item)}>+</span>
                         {item.quantity}
                         <span
                           onClick={() =>
                             item.quantity > 1
-                              ? this.props.reduceItemQuantity(item)
-                              : this.props.removeItem(item)
+                              ? reduceItemQuantity(item)
+                              : removeItem(item)
                           }
                         >
                           -
@@ -101,3 +109,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
+Cart.propTypes = {
+  selectedCurrency: PropsType.string,
+  cartItems: PropsType.array,
+  addItem: PropsType.func,
+  reduceItemQuantity: PropsType.func,
+  removeItem: PropsType.func,
+};

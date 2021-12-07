@@ -1,5 +1,6 @@
-import { createBrowserHistory } from "history";
 import React, { Component } from "react";
+import PropsType from "prop-types";
+import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import {
   addItem,
@@ -15,7 +16,15 @@ import showPrice from "../../functions/showPrice";
 
 class Cart extends Component {
   render() {
-    const { selectedCurrency } = this.props;
+    const {
+      selectedCurrency,
+      cartItems,
+      addItem,
+      reduceItemQuantity,
+      removeItem,
+      closeCartModal,
+      clearCart,
+    } = this.props;
     const history = createBrowserHistory();
 
     const refreshPage = () => window.location.reload(false);
@@ -24,17 +33,13 @@ class Cart extends Component {
       <div className={stl.cart_dropdown}>
         <div className={stl.inner_container}>
           <h5>
-            My Bag:{" "}
-            {this.props.cartItems.reduce(
-              (acc, { quantity }) => acc + quantity,
-              0
-            )}{" "}
+            My Bag: {cartItems.reduce((acc, { quantity }) => acc + quantity, 0)}{" "}
             items
           </h5>
           <div className={stl.items}>
-            {this.props.cartItems.length
-              ? this.props.cartItems.map((item, index) => (
-                  <div className={stl.item}>
+            {cartItems.length
+              ? cartItems.map((item, index) => (
+                  <div key={index} className={stl.item}>
                     <div className={stl.item_info}>
                       <p>{item.name}</p>
                       <p className={stl.price}>
@@ -43,13 +48,13 @@ class Cart extends Component {
                     </div>
                     <div className={stl.controllers_container}>
                       <div className={stl.controllers}>
-                        <span onClick={() => this.props.addItem(item)}>+</span>
+                        <span onClick={() => addItem(item)}>+</span>
                         {item.quantity}
                         <span
                           onClick={() =>
                             item.quantity > 1
-                              ? this.props.reduceItemQuantity(item)
-                              : this.props.removeItem(item)
+                              ? reduceItemQuantity(item)
+                              : removeItem(item)
                           }
                         >
                           -
@@ -71,7 +76,7 @@ class Cart extends Component {
               shape="outlined"
               onClick={() => {
                 history.push("/home/cart");
-                this.props.closeCartModal();
+                closeCartModal();
                 refreshPage();
               }}
             >
@@ -80,8 +85,8 @@ class Cart extends Component {
             <Button
               size="md"
               onClick={() => {
-                this.props.clearCart();
-                this.props.closeCartModal();
+                clearCart();
+                closeCartModal();
               }}
             >
               CHECK OUT
@@ -113,3 +118,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
+Cart.propTypes = {
+  selectedCurrency: PropsType.string,
+  cartItems: PropsType.array,
+  addItem: PropsType.func,
+  reduceItemQuantity: PropsType.func,
+  removeItem: PropsType.func,
+  closeCartModal: PropsType.func,
+  clearCart: PropsType.func,
+};

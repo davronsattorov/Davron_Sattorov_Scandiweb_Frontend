@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import stl from "./index.module.css";
 
 export default class ImgPreview extends Component {
@@ -57,3 +58,9 @@ export default class ImgPreview extends Component {
     );
   }
 }
+
+ImgPreview.propTypes = {
+  gallery: PropsType.array,
+  width: PropsType.string,
+  height: PropsType.string,
+};

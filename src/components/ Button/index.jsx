@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import "./index.css";
 
 export default class Button extends Component {
@@ -12,9 +13,16 @@ export default class Button extends Component {
     } = this.props;
 
     return (
-      <button className={`btn btn-${size} ${shape}`} {...rest}>
+      <button className={`${className} btn btn-${size} ${shape}`} {...rest}>
         {children}
       </button>
     );
   }
 }
+
+Button.propTypes = {
+  size: PropTypes.string,
+  shape: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.node,
+};

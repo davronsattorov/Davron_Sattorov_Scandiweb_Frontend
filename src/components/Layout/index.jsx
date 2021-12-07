@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 
 export default class Layout extends Component {
   render() {
@@ -10,3 +11,8 @@ export default class Layout extends Component {
     );
   }
 }
+
+Layout.propTypes = {
+  navbar: PropsType.Component,
+  children: PropsType.node,
+};

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { createBrowserHistory } from "history";
 import { cartIcon } from "../../assets/icons";
 import stl from "./index.module.css";
@@ -78,3 +79,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
+
+Card.propTypes = {
+  item: PropsType.object,
+  selectedCurrency: PropsType.string,
+  addItem: PropsType.func,
+  match: PropsType.object,
+};

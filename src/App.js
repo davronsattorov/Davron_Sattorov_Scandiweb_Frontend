@@ -12,9 +12,9 @@ import "./App.css";
 import AppRouter from "./routes";
 import { createBrowserHistory } from "history";
 
-const errorLink = onError(({ graphqlErrors, networkError }) => {
+const errorLink = onError(({ graphqlErrors }) => {
   if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
+    graphqlErrors.map(({ message }) => {
       alert(`Graphql error ${message}`);
       return 0;
     });

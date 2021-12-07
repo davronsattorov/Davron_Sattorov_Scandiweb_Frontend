@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { connect } from "react-redux";
 import Cart from "../components/Cart";
 import CurrencyModal from "../components/CurrencyModal";
@@ -17,6 +18,12 @@ class RouterLayout extends Component {
     );
   }
 }
+
+RouterLayout.propTypes = {
+  isCurrencyOpen: PropsType.bool,
+  isModalOpen: PropsType.bool,
+  children: PropsType.node,
+};
 
 const mapStateToProps = (state) => {
   const { isModalOpen } = state.cart;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import { capitalizeFirstLetter } from "../../functions/capitalizeFirstLetter";
 import stl from "./index.module.css";
 
@@ -34,8 +35,9 @@ export default class ProductSizes extends Component {
             size === "lg" ? stl.size_lg : stl.size_sm
           }`}
         >
-          {items.map(({ id, value }) => (
+          {items.map(({ id, value }, index) => (
             <div
+              key={index}
               style={
                 id === this.state.selectedSize
                   ? name === "Color"
@@ -58,3 +60,11 @@ export default class ProductSizes extends Component {
     );
   }
 }
+
+ProductSizes.propTypes = {
+  size: PropsType.string,
+  name: PropsType.string,
+  items: PropsType.array,
+  onChange: PropsType.func,
+  showName: PropsType.bool,
+};

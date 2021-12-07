@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropsType from "prop-types";
 import Card from "../../components/Card";
 import stl from "./index.module.css";
 import { client } from "../../App";
@@ -50,3 +51,7 @@ export class Category extends Component {
 }
 
 export default Category;
+
+Category.propTypes = {
+  match: PropsType.object,
+};
